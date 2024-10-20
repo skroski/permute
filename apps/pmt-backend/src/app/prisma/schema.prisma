@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  nome           String
+  email          String  @unique
+  telefone       String?
+  endereco       String?
+  tipo           String
+  avaliacaoMedia Float?  @default(0)
+  foto           String?
+
+  ofertas   Oferta[]
+  propostas Proposta[]
+
+  avaliacoesAvaliador Avaliacao[] @relation(name: "AvaliadorRelation")
+  avaliacoesAvaliado  Avaliacao[] @relation(name: "AvaliadoRelation")
+}
+
+model Oferta {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  titulo          String
+  descricao       String
+  tipo            String // 'produto' ou 'servico'
+  valorReferencia Float?
+  categorias      String[]
+  usuarioId       String   @db.ObjectId
+  usuario         Usuario  @relation(fields: [usuarioId], references: [id])
+
+  // Relacionaments
+  oferta       Proposta[] @relation(name: "ofertaProposta")
+  contraOferta Proposta[] @relation(name: "contraOfertaProposta")
+}
+
+model Proposta {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  status         String // 'pendente', 'aceita', 'recusada'
+  ofertaId       String    @db.ObjectId
+  contraOfertaId String    @db.ObjectId
+  proponenteId   String    @db.ObjectId
+  oferta         Oferta    @relation(fields: [ofertaId], references: [id], name: "ofertaProposta")
+  proponente     Usuario   @relation(fields: [proponenteId], references: [id])
+  contraOferta   Oferta?   @relation(fields: [contraOfertaId], references: [id], name: "contraOfertaProposta")
+  Permuta        Permuta[]
+}
+
+model Permuta {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  propostaAceitaId String   @db.ObjectId
+  dataConclusao    DateTime
+  status           String // 'concluida', 'em andamento'
+
+  propostaAceita Proposta    @relation(fields: [propostaAceitaId], references: [id])
+  Avaliacao      Avaliacao[]
+}
+
+model Avaliacao {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  nota        Int
+  comentario  String?
+  avaliadorId String  @db.ObjectId
+  avaliadoId  String  @db.ObjectId
+  permutaId   String  @db.ObjectId
+
+  avaliador Usuario @relation(fields: [avaliadorId], references: [id], name: "AvaliadorRelation")
+  avaliado  Usuario @relation(fields: [avaliadoId], references: [id], name: "AvaliadoRelation")
+  permuta   Permuta @relation(fields: [permutaId], references: [id])
+}
