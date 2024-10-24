@@ -13,7 +13,7 @@ export class OfertasService {
     return this.prisma.oferta.create({
       data: createOfertaDto,
     });
-  } x
+  }
 
   // Buscar todas as ofertas
   async findAll(): Promise<Oferta[]> {

@@ -26,8 +26,8 @@ model Usuario {
   ofertas   Oferta[]
   propostas Proposta[]
 
-  avaliacoesAvaliador Avaliacao[] @relation(name: "AvaliadorRelation")
-  avaliacoesAvaliado  Avaliacao[] @relation(name: "AvaliadoRelation")
+  avaliacaosAvaliador Avaliacao[] @relation(name: "AvaliadorRelation")
+  avaliacaosAvaliado  Avaliacao[] @relation(name: "AvaliadoRelation")
 }
 
 model Oferta {
