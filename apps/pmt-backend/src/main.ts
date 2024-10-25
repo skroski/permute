@@ -13,6 +13,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+  // Habilitando CORS
+  app.enableCors({
+    origin: 'http://localhost:4200', // substitua pelo URL do seu frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // se necessário
+  });
   const port = process.env.PORT || 3000;
   // Configuração do Swagger
   const config = new DocumentBuilder()
