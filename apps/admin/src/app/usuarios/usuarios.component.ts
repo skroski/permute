@@ -13,7 +13,7 @@ import { UsuariosService } from './usuarios.service';
   template: `
     <!-- Adicionar o template HTML utilizar classes com Tailwind e DaisyUI -->
     <div class="p-4">
-      <h1 class="text-2xl font-bold">Usuários</h1>
+      <h1 class="text-2xl font-bold text-red-700">Usuários</h1>
       <ul>
     <li *ngFor="let usuario of usuarios">
       {{ usuario.nome }} - {{ usuario.email }}
