@@ -10,7 +10,7 @@ export class AvaliacaoService {
 
   // Criar uma nova avaliação
   async create(createAvaliacaoDto: CreateAvaliacaoDto): Promise<Avaliacao> {
-    const { avaliadorId, avaliadoId, permutaId, ...data } = createAvaliacaoDto;
+    const { avaliadorId, avaliadoId, permutaId, nota = 0, ...data } = createAvaliacaoDto;
 
     return this.prisma.avaliacao.create({
       data: {
@@ -18,6 +18,7 @@ export class AvaliacaoService {
         avaliador: { connect: { id: avaliadorId } }, // Conectar o avaliador
         avaliado: { connect: { id: avaliadoId } },   // Conectar o avaliado
         permuta: { connect: { id: permutaId } },     // Conectar a permuta
+        nota,                                       // Ensure nota is always defined
       },
     });
   }

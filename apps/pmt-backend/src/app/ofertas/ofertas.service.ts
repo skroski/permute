@@ -11,7 +11,14 @@ export class OfertasService {
   // Criar uma nova oferta
   async create(createOfertaDto: CreateOfertaDto): Promise<Oferta> {
     return this.prisma.oferta.create({
-      data: createOfertaDto,
+      data: {
+        usuarioId: createOfertaDto.usuarioId ?? '',
+        titulo: createOfertaDto.titulo ?? '',
+        descricao: createOfertaDto.descricao ?? '',
+        tipo: createOfertaDto.tipo ?? 'produto',
+        valorReferencia: createOfertaDto.valorReferencia,
+        categorias: createOfertaDto.categorias ?? [],
+      },
     });
   }
 

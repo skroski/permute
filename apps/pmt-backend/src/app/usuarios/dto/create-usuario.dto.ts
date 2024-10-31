@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateUsuarioDto {
   @ApiProperty()
-  nome: string;
+  nome!: string;
 
   @ApiProperty()
-  email: string;
+  email!: string;
 
   @ApiProperty({ required: false })
   telefone?: string;
@@ -14,7 +14,7 @@ export class CreateUsuarioDto {
   endereco?: string;
 
   @ApiProperty({ enum: ['empresa', 'individual'] })
-  tipo: 'empresa' | 'individual';
+  tipo!: 'empresa' | 'individual';
 
   @ApiProperty({ required: false })
   avaliacaoMedia?: number;

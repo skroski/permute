@@ -6,6 +6,10 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./usuarios/usuarios.component').then(m => m.UsuariosComponent)
   },
   {
+    path: 'ofertas',
+    loadComponent: () => import('./ofertas/ofertas.component').then(m => m.OfertasComponent)
+  },
+  {
     path: '**',
     redirectTo: 'usuarios'
   }

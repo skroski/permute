@@ -4,14 +4,14 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePropostaDto {
   @ApiProperty()
-  status: string; // Status da proposta ('pendente', 'aceita', 'recusada')
+  status!: string; // Status da proposta ('pendente', 'aceita', 'recusada')
 
   @ApiProperty()
-  ofertaId: string; // ID da oferta
+  ofertaId!: string; // ID da oferta
 
   @ApiProperty()
   contraOfertaId?: string; // ID da contra-oferta (opcional)
 
   @ApiProperty()
-  proponenteId: string; // ID do usuário proponente
+  proponenteId!: string; // ID do usuário proponente
 }
